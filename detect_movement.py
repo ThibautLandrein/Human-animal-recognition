@@ -6,6 +6,7 @@ Created on Sat Apr 10 16:28:55 2021
 """
 
 import cv2 as cv
+from datetime import datetime
 #This depends on the camera you have. You might need to do some research and testing on how to get your IP camera stream
 cap = cv.VideoCapture("rtsp://login:mdp@IP:port/videoMain")
 while True:
@@ -23,8 +24,8 @@ while True:
     contours, _ = cv.findContours(
         dilated, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
-#    if contours:
-#        cv.imwrite('E:\Test_gray.jpg', frame2)
+    if contours:
+        cv.imwrite('E:\movement_{datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}.jpg', frame2)
     for contour in contours:
         (x, y, w, h) = cv.boundingRect(contour)
         if cv.contourArea(contour) < 900:
